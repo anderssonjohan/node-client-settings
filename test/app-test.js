@@ -60,6 +60,19 @@ describe('route ', () => {
         done();
       });
     });
+
+    it('responds with only changed', done => {
+      request(app)
+      .get('/config/ios/267')
+      .set('If-None-Match', 'W/"1"')
+      .expect(200)
+      .expect('ETag', 'W/"2"')
+      .expect({background_color: '#000'})
+      .end((err) => {
+        if (err) throw err;
+        done();
+      });
+    });
   });
 });
 
